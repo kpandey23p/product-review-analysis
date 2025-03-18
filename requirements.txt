@@ -3,5 +3,5 @@ torch
 nltk
 pandas
 gunicorn
-sklearn
+scikit-learn
 requests
