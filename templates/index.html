@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Trustworthiness Checker</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        input { padding: 10px; margin: 10px; width: 200px; }
+        button { padding: 10px 20px; cursor: pointer; }
+        #result { margin-top: 20px; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <h2>Product Trustworthiness Checker</h2>
+    <input type="text" id="product_id" placeholder="Enter Product ID">
+    <button onclick="checkProduct()">Check</button>
+    <div id="result"></div>
+
+    <script>
+        function checkProduct() {
+            const productId = document.getElementById("product_id").value;
+            fetch("/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ product_id: productId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerHTML =
+                    `<strong>Trustworthiness Score:</strong> ${data.score} <br> 
+                     <strong>Label:</strong> ${data.label}`;
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>
